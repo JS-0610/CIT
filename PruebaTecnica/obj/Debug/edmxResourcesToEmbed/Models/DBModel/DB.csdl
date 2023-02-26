@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="citModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tbRoles">
+    <Key>
+      <PropertyRef Name="id_puesto" />
+    </Key>
+    <Property Name="id_puesto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="rol" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="tbUsuario" Relationship="citModel.FK_tbUsuario_tbRoles" FromRole="tbRoles" ToRole="tbUsuario" />
+  </EntityType>
+  <EntityContainer Name="citEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tbRoles" EntityType="Self.tbRoles" />
+    <EntitySet Name="tbUsuario" EntityType="citModel.tbUsuario" />
+    <AssociationSet Name="FK_tbUsuario_tbRoles" Association="citModel.FK_tbUsuario_tbRoles">
+      <End Role="tbRoles" EntitySet="tbRoles" />
+      <End Role="tbUsuario" EntitySet="tbUsuario" />
+    </AssociationSet>
+    <EntitySet Name="tbProductos" EntityType="citModel.tbProductos" />
+  </EntityContainer>
+  <EntityType Name="tbUsuario">
+    <Key>
+      <PropertyRef Name="id_usuario" />
+    </Key>
+    <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="usuario" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="celular" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="puesto" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tbRoles" Relationship="citModel.FK_tbUsuario_tbRoles" FromRole="tbUsuario" ToRole="tbRoles" />
+  </EntityType>
+  <Association Name="FK_tbUsuario_tbRoles">
+    <End Type="citModel.tbRoles" Role="tbRoles" Multiplicity="1" />
+    <End Type="citModel.tbUsuario" Role="tbUsuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbRoles">
+        <PropertyRef Name="id_puesto" />
+      </Principal>
+      <Dependent Role="tbUsuario">
+        <PropertyRef Name="puesto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tbProductos">
+    <Key>
+      <PropertyRef Name="id_producto" />
+    </Key>
+    <Property Name="id_producto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="precio" Type="Double" Nullable="false" />
+    <Property Name="descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="imagen" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="unidad" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="cantidad" Type="Double" Nullable="false" />
+    <Property Name="estado" Type="Int32" Nullable="false" />
+  </EntityType>
+</Schema>

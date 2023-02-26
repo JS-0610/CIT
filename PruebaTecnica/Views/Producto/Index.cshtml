@@ -1,0 +1,65 @@
+﻿@model List<PruebaTecnica.Models.ProductoViewModel>
+@{
+    ViewBag.Title = "Productos";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <input type="button" style="margin:10px;" class="btn btn-primary" onclick="document.location.href='@Url.Content("~/Producto/Add")'" value="Agregar Producto" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table table-bordered">
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Imagen</th>
+                <th>Unidad</th>
+                <th>Cantidad</th>
+                <th>Acciones</th>
+            </tr>
+            @foreach (var oElemento in Model)
+            {
+                <tr>
+                    <td>@oElemento.Id</td>
+                    <td>@oElemento.Nombre</td>
+                    <td>@oElemento.Descripcion</td>
+                    <td>@oElemento.Precio</td>
+                    <td><img src="@oElemento.Imagen" style="width:50px"/></td>
+                    <td>@oElemento.Unidad</td>
+                    <td>@oElemento.Cantidad
+                        @if(oElemento.Cantidad <= 15)
+                        {
+                            <br /><span class="text-danger">Stock Bajo</span>
+                        }
+                    </td>
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Producto/Edit/"+oElemento.Id)'" type="button" value="Editar" class="btn btn-warning" />
+                        <input onclick="jsDelete(@oElemento.Id)" type="button" value="Eliminar" class="btn btn-danger" />
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+        function jsDelete(id) {
+            url = "@Url.Content("~/Producto/Delete")"+"/"+id;
+            $.post(url, function (data) {
+                if (data == "1") {
+                    document.location.href="@Url.Content("~/Producto/")"
+                } else {
+                    alert("Ocurrio un error al eliminar");
+                }
+            })
+        }
+    </script>
+
+}
+

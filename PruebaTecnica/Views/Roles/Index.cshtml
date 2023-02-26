@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    List<PruebaTecnica.Models.RolViewModel> LstRol = ViewBag.Rol;
+    List<PruebaTecnica.Models.UserViewModel> LstUser = ViewBag.User;
+}
+
+<div style="
+                        display: grid;
+                        align-items: center;
+                        justify-items: flex-start;
+                        width: auto;
+                        margin: 15px;
+                        padding: 35px;
+                        border-radius: 10px;">
+    <div style="display: grid;align-items: center;justify-items: left;width: 100%;">
+        Usuario:
+        <select id="selectUser" style="margin-bottom: 10px;" class="form-control">
+            <option value="default">-Seleccione un Usuario-</option>
+            @foreach (var uElement in LstUser)
+            {
+                <option value="@uElement.Id">@uElement.Nombre</option>
+            }
+        </select>
+
+        Rol:
+        <select id="selectRol" style="margin-bottom: 10px;" class="form-control">
+            <option value="default">-Seleccione un Rol-</option>
+            @foreach (var rElement in LstRol)
+            {
+                <option value="@rElement.Id">@rElement.Rol</option>
+            }
+        </select>
+
+        <input style="margin-left:20px" class="btn btn-primary" type="button" onclick="Enviar()" value="Modificar Usuario" />
+    </div>
+</div>
+
+    @section scripts{
+        <script>
+        function Enviar() {
+            var rol = document.getElementById("selectRol").value;
+            var usuario = document.getElementById("selectUser").value;
+
+            if (rol != "default" && usuario != "default") {
+                var url = "@Url.Content("~/Roles/Modificar")";
+                var oParam = "{ 'idUser': '" + usuario + "','idRol': '" + rol + "' }";
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: oParam,
+                    contentType: "application/json",
+                    success: function (data) {
+                        if (data == "1") {
+                            alert("Rol de Usuario Modificado");
+                            location.href=@Url.Content("~/User/");
+                        } else {
+                            alert("Ocurrio un Error");
+                        }
+                    }
+                });
+
+            } else {
+                if (rol == "default") {
+                    alert("Por Favor Seleccione un Rol");
+                }
+                if (usuario == "default") {
+                    alert("Por Favor Seleccione un Usuario");
+                }
+            }
+        }
+
+        </script>
+
+
+    }

@@ -1,0 +1,33 @@
+﻿@model PruebaTecnica.Models.RolAddViewModel
+@{
+    ViewBag.Title = "Agregar Rol";
+}
+
+<div style="
+                        display: grid;
+                        align-items: center;
+                        justify-items: flex-start;
+                        width: auto;
+                        margin: 15px;
+                        padding: 35px;
+                        border-radius: 10px;">
+    <div style="display: grid;align-items: center;justify-items: center;width: 100%;">
+
+        @using (Html.BeginForm("Add", "Rol", FormMethod.Post, new { role = "form", @class = "" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationMessage("error", new { @class = "text-danger" })
+
+            @Html.LabelFor(d => d.Rol)
+            @Html.TextBoxFor(d => d.Rol, new { @class = "form-control" })
+            @Html.ValidationMessage("Rol", new { @class = "text-danger" }) <br />
+
+            <div style="text-align:right;">
+                <input type="submit" class="btn btn-success" value="Guardar" />
+            </div>
+        }
+
+    </div>
+
+</div>
+

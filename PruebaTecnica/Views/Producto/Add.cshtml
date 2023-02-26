@@ -1,0 +1,52 @@
+﻿@model PruebaTecnica.Models.ProductoAddViewModel
+@{
+    ViewBag.Title = "Agregar Producto";
+}
+
+<div style="
+                        display: grid;
+                        align-items: center;
+                        justify-items: flex-start;
+                        width: auto;
+                        margin: 15px;
+                        padding: 35px;
+                        border-radius: 10px;">
+    <div style="display: grid;align-items: center;justify-items: center;width: 100%;">
+
+        @using (Html.BeginForm("Add", "Producto", FormMethod.Post, new { role = "form", @class = "" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationMessage("error", new { @class = "text-danger" })
+
+            @Html.LabelFor(d => d.Nombre)
+            @Html.TextBoxFor(d => d.Nombre, new { @class = "form-control" })
+            @Html.ValidationMessage("Nombre", new { @class = "text-danger" }) <br />
+
+            @Html.LabelFor(d => d.Descripcion)
+            @Html.TextBoxFor(d => d.Descripcion, new { @class = "form-control" })
+            @Html.ValidationMessage("Descripcion", new { @class = "text-danger" }) <br />
+
+            @Html.LabelFor(d => d.Precio)
+            @Html.TextBoxFor(d => d.Precio, new { @class = "form-control" })
+            @Html.ValidationMessage("Precio", new { @class = "text-danger" }) <br />
+
+            @Html.LabelFor(d => d.Imagen)
+            @Html.TextBoxFor(d => d.Imagen, new { type = "file", @class = "form-control" })
+            @Html.ValidationMessage("Imagen", new { @class = "text-danger" }) <br />
+
+            @Html.LabelFor(d => d.Unidad)
+            @Html.TextBoxFor(d => d.Unidad, new { @class = "form-control" })
+            @Html.ValidationMessage("Unidad", new { @class = "text-danger" }) <br />
+
+            @Html.LabelFor(d => d.Cantidad)
+            @Html.TextBoxFor(d => d.Cantidad, new { @class = "form-control" })
+            @Html.ValidationMessage("Cantidad", new { @class = "text-danger" }) <br />
+
+            <div style="text-align:right;">
+                <input type="submit" class="btn btn-success" value="Guardar" />
+            </div>
+        }
+
+    </div>
+
+</div>
